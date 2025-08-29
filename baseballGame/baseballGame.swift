@@ -34,11 +34,17 @@ class BaseballGame {
                     ball += 1
                 }
             }
-            if strike > 0 || ball > 0 {    // 둘 중 하나만 값이 있어도 출력
+            if strike == 3 {
+                print("정답입니다.")
+                break
+            } else if strike > 0 || ball > 0 {    // 둘 중 하나만 값이 있어도 출력
                 print("\(strike)스트라이크 \(ball)볼")
             } else {
                 print("Nothing")
             }
+            strike = 0
+            ball = 0
+            
             
         }
     }
