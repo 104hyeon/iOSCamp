@@ -34,7 +34,13 @@ class BaseballGame {
             
             guard let userInput = readLine() else { continue }
             
-            let inputNums = userInput.map { Int(String($0))! }
+            let inputNums = userInput.compactMap { Int(String($0)) }
+            
+            
+            if inputNums.count != userInput.count {
+                print("올바르지 않은 입력 값입니다.")
+                continue
+            }
             
            
             
@@ -49,7 +55,7 @@ class BaseballGame {
             
             // 2. 0이 표함되어 있을 때
             if inputNums.contains(0) {
-                print("0이 포함되어 있습니다")
+                print("0을 제외하고 입력해주세요")
                 continue
             } else {
             }
@@ -90,6 +96,7 @@ class BaseballGame {
             
             
         }
+        print("게임을 종료합니다")
     }
     
     func makeAnswer() -> [Int] {
