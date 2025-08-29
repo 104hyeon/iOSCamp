@@ -26,26 +26,27 @@ class BaseballGame {
             /*
              유저의 입력값을 받음
              유저가 숫자 3개 외 다른 값을 입력했을 때 오류 문구 보여주기
-             1. 중복된 숫자가 있을 때
-             2. 0을 입력했을 때
-             3. 숫자가 3개가 아닐 때
-             4. 숫자가 아닌 다른 값을 입력했을 때
+             1. 숫자가 아닌 다른 값을 입력했을 때
+             2. 중복된 숫자가 있을 때
+             3. 0을 입력했을 때
+             4. 숫자가 3개가 아닐 때
+            
              */
             
             guard let userInput = readLine() else { continue }
             
             let inputNums = userInput.compactMap { Int(String($0)) }
             
-            
+
+
+            // 1.숫자가 아닌 다른 값을 입력했을 때
             if inputNums.count != userInput.count {
                 print("올바르지 않은 입력 값입니다.")
                 continue
             }
             
-           
-            
 
-            // 1. 중복된 숫자가 있을 때
+            // 2. 중복된 숫자가 있을 때
             let inset = Set(inputNums)
             if inset.count != inputNums.count {
                 print("중복된 숫자를 포함하고 있습니다")
@@ -53,7 +54,7 @@ class BaseballGame {
             } else {
             }
             
-            // 2. 0이 표함되어 있을 때
+            // 3. 0이 표함되어 있을 때
             if inputNums.contains(0) {
                 print("0을 제외하고 입력해주세요")
                 continue
@@ -61,16 +62,14 @@ class BaseballGame {
             }
             
           
-            // 3. 숫자가 3개가 아닐 때
+            // 4. 숫자가 3개가 아닐 때
             if inputNums.count != 3 {
                 print("숫자를 3개 입력하세요")
                 continue
             } else {
             }
             
-            // 4. 숫자가 아닌 다른 값을 입력했을 때
-            
-            
+                       
             
             for i in 0..<inputNums.count {
                 if inputNums[i] == answer[i] {
@@ -96,8 +95,10 @@ class BaseballGame {
             
             
         }
+        
         print("게임을 종료합니다")
     }
+    
     
     func makeAnswer() -> [Int] {
         var randomNum: [Int] = []
