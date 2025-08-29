@@ -15,7 +15,7 @@ class BaseballGame {
         var strike = 0
         var ball = 0
         
-        print("게임을 시작합니다")
+        print("< 게임을 시작합니다 >")
         
         let isGameOver = true
         
@@ -38,7 +38,6 @@ class BaseballGame {
             let inputNums = userInput.compactMap { Int(String($0)) }
             
 
-
             // 1.숫자가 아닌 다른 값을 입력했을 때
             if inputNums.count != userInput.count {
                 print("올바르지 않은 입력 값입니다.")
@@ -54,7 +53,7 @@ class BaseballGame {
             } else {
             }
             
-            // 3. 맨 앞지리 0이 올 때
+            // 3. 맨 앞자리 0이 올 때
             if inputNums[0] == 0 {
                 print("맨 앞자리는 0이 될 수 없습니다")
                 continue
@@ -70,7 +69,7 @@ class BaseballGame {
             }
             
                        
-            
+            // 정답과 비교하여 스트라이크와 볼 카운트하기
             for i in 0..<inputNums.count {
                 if inputNums[i] == answer[i] {
                     strike += 1

@@ -17,7 +17,7 @@
  */
 
 
-let game = BaseballGame()
-game.start()
+let game = StartGame()
+game.startGame()
 
 
