@@ -54,9 +54,9 @@ class BaseballGame {
             } else {
             }
             
-            // 3. 0이 표함되어 있을 때
-            if inputNums.contains(0) {
-                print("0을 제외하고 입력해주세요")
+            // 3. 맨 앞지리 0이 올 때
+            if inputNums[0] == 0 {
+                print("맨 앞자리는 0이 될 수 없습니다")
                 continue
             } else {
             }
@@ -104,9 +104,13 @@ class BaseballGame {
         var randomNum: [Int] = []
 
         while randomNum.count < 3 {
-            let number = Int.random(in: 1...9)
+            let number = Int.random(in: 0...9)
             if !randomNum.contains(number) {   // 중복되는 숫자 제외하기
                 randomNum.append(number)   // 랜덤으로 뽑은 숫자 배열에 추가
+            }
+            if randomNum[0] == 0 {
+                break
+                               
             }
         }
         return(randomNum)
