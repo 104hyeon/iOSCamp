@@ -22,9 +22,48 @@ class BaseballGame {
         // 값을 받는 것부터 정답이 될 때까지 반복
         while isGameOver {
             print("숫자를 입력하세요")
-            let userInput = readLine() // 임시로 값 지정함, readLine으로 수정필요. 유저한테 입력받고
-                        
-            let inputNums = Array(userInput!).map { Int(String($0))! }
+            
+            /*
+             유저의 입력값을 받음
+             유저가 숫자 3개 외 다른 값을 입력했을 때 오류 문구 보여주기
+             1. 중복된 숫자가 있을 때
+             2. 0을 입력했을 때
+             3. 숫자가 3개가 아닐 때
+             4. 숫자가 아닌 다른 값을 입력했을 때
+             */
+            
+            guard let userInput = readLine() else { continue }
+            
+            let inputNums = userInput.map { Int(String($0))! }
+            
+           
+            
+
+            // 1. 중복된 숫자가 있을 때
+            let inset = Set(inputNums)
+            if inset.count != inputNums.count {
+                print("중복된 숫자를 포함하고 있습니다")
+                continue
+            } else {
+            }
+            
+            // 2. 0이 표함되어 있을 때
+            if inputNums.contains(0) {
+                print("0이 포함되어 있습니다")
+                continue
+            } else {
+            }
+            
+          
+            // 3. 숫자가 3개가 아닐 때
+            if inputNums.count != 3 {
+                print("숫자를 3개 입력하세요")
+                continue
+            } else {
+            }
+            
+            // 4. 숫자가 아닌 다른 값을 입력했을 때
+            
             
             
             for i in 0..<inputNums.count {
@@ -34,6 +73,8 @@ class BaseballGame {
                     ball += 1
                 }
             }
+            
+            // 스트라이크 3개 즉 정답이면 "정답입니다" 출력 후 빠져나가기
             if strike == 3 {
                 print("정답입니다.")
                 break
@@ -42,6 +83,8 @@ class BaseballGame {
             } else {
                 print("Nothing")
             }
+            
+            // 힌트 알려준 후 스트라이크, 볼 카운트 리셋
             strike = 0
             ball = 0
             
