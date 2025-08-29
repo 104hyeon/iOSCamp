@@ -44,13 +44,7 @@ class StartGame {
             } else {
             }
             
-            // 3. 숫자가 1, 2, 3이 아닐 때
-            if inputNums != [1, 2, 3] {
-                print("<1, 2, 3> 중 하나를 입력하세요")
-                continue
-            } else {
-            }
-            
+        
             
             switch inputNums {
             case [1]:
