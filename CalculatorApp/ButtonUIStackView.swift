@@ -6,15 +6,24 @@
 //
 
 import UIKit
+import SnapKit
 
 class ButtonUIStackView: UIStackView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    let sevenButton = UIButton()
+    let eightButton = UIButton()
+    let nineButton = UIButton()
+    let plusButton = UIButton()
+    
+    
+    func configureUI() {
+        //        view.backgroundColor = .black
+        //
+        //
+        //        [sevenButton, eightButton, nineButton, plusButton]
+        //            .forEach { view.addSubview($0) }
+        //    }
+        
+        
+        
     }
-    */
-
 }
