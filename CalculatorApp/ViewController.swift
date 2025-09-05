@@ -16,12 +16,13 @@ import UIKit
 import SnapKit
 
 class ViewController: UIViewController {
-    let resultlabel = UILabel()
-    let stackView = UIStackView()
-    let sevenButton = UIButton()
-    let eightButton = UIButton()
-    let nineButton = UIButton()
-    let plusButton = UIButton()
+    var resultlabel = UILabel()
+
+    var sevenButton = UIButton()
+    var eightButton = UIButton()
+    var nineButton = UIButton()
+    var plusButton = UIButton()
+    var firstStack = UIStackView()
     
     
     override func viewDidLoad() {
@@ -30,42 +31,37 @@ class ViewController: UIViewController {
         setConstraints()
         
     }
-    // Label 구성 함수
+    // 구성 함수
     func cofigureUI() {
-        
-        [resultlabel, stackView]
-            .forEach { view.addSubview($0) }
-        
+                
         resultlabel.backgroundColor = .black
         resultlabel.textColor = .white
         resultlabel.text = "12345"
         resultlabel.font = .boldSystemFont(ofSize: 60)
         resultlabel.textAlignment = .right
         
-        stackView.axis = .horizontal
-        stackView.backgroundColor = .black
-        stackView.spacing = 10
-        stackView.distribution = .fillEqually
-        
-        
-        // 버튼 스택뷰에
-        [sevenButton, eightButton, nineButton, plusButton]
-            .forEach { stackView.addArrangedSubview($0)
-                $0.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
-                $0.layer.cornerRadius = 40
-                $0.titleLabel?.font = .boldSystemFont(ofSize: 30)
-                sevenButton.snp.makeConstraints {
-                    $0.width.equalTo(80)
-                    $0.height.equalTo(80)
-                }
-            }
         // 버튼에 타이틀 넣기
-        sevenButton.setTitle("7", for: .normal)
-        eightButton.setTitle("8", for: .normal)
-        nineButton.setTitle("9", for: .normal)
-        plusButton.setTitle("+", for: .normal)
+        sevenButton = buttons(title: "7")
+        eightButton = buttons(title: "8")
+        nineButton = buttons(title: "9")
+        plusButton = buttons(title: "+")
+        firstStack = makeHorizontalStackView([sevenButton, eightButton, nineButton, plusButton])
+               
+                
+        [resultlabel, firstStack]
+            .forEach { view.addSubview($0) }
+        
+        // firstSatck 레이아웃
+        firstStack.snp.makeConstraints {
+            $0.height.equalTo(80)
+            $0.leading.equalToSuperview().inset(30)
+            $0.trailing.equalToSuperview().inset(30)
+            $0.top.equalTo(resultlabel.snp.bottom).offset(20)
+        }
     }
-    // 레이아웃
+    
+    
+    // label 레이아웃
     func setConstraints() {
         resultlabel.snp.makeConstraints {
             $0.height.equalTo(100)
@@ -73,14 +69,31 @@ class ViewController: UIViewController {
             $0.leading.equalToSuperview().inset(30)
             $0.trailing.equalToSuperview().inset(30)
         }
-        stackView.snp.makeConstraints {
-            $0.height.equalTo(80)
-            $0.top.equalTo(resultlabel.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().inset(30)
-            $0.trailing.equalToSuperview().inset(30)
-        }
     }
     
+    // 반복사용하는 버튼 디자인 함수로 만들기
+    func buttons(title: String) -> UIButton {
+        let button = UIButton()
+        button.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
+        button.setTitle(title, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 30)  //옵셔널체이닝
+        button.layer.cornerRadius = 40
+        button.snp.makeConstraints {
+            $0.width.equalTo(80)
+            $0.height.equalTo(80)
+        }
+        return button
+    }
     
+    // 반복 사용하는 스택뷰 함수로 만들기
+    func makeHorizontalStackView(_ views: [UIView]) -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: views)
+        stackView.axis = .horizontal
+        stackView.backgroundColor = .black
+        stackView.spacing = 10
+        stackView.distribution = .fillEqually
+        return stackView
+    }
 }
+
 
