@@ -1,17 +1,7 @@
 /*
- Lv3.
- UIStackView을 사용해서 세로 스택 뷰 생성. 왼쪽과 같이 구성해보세요.
-
- verticalStackView 속성
-     - axis = .vertical
-     - backgroundColor = .black
-     - spacing = 10
-     - distribution = .fillEqually
- - verticalStackView AutoLayout
-     - width = 350
-     - top = label 의 bottom 으로 부터 60 떨어지도록.
-     - centerX = superView 와 같도록.
-
+ Lv4.
+연산버튼 orange로 색상변경
+버튼 관련해서 함수 수정
  */
 
 
@@ -75,28 +65,28 @@ class ViewController: UIViewController {
             .forEach { view.addSubview($0) }
                 
         // 버튼에 타이틀 넣기와 스택 구성하기
-        sevenButton = buttons(title: "7")
-        eightButton = buttons(title: "8")
-        nineButton = buttons(title: "9")
-        plusButton = buttons(title: "+")
+        sevenButton = makeButtons(title: "7", action: nil, backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        eightButton = makeButtons(title: "8", action: nil, backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        nineButton = makeButtons(title: "9", action: nil, backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        plusButton = makeButtons(title: "+", action: nil, backgroundColor: .orange)
         firstStack = makeHorizontalStackView([sevenButton, eightButton, nineButton, plusButton])
         
-        sixButton = buttons(title: "6")
-        fiveButton = buttons(title: "5")
-        fourButton = buttons(title: "4")
-        minusButton = buttons(title: "-")
+        sixButton = makeButtons(title: "6", action: nil, backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        fiveButton = makeButtons(title: "5", action: nil, backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        fourButton = makeButtons(title: "4", action: nil, backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        minusButton = makeButtons(title: "-", action: nil, backgroundColor: .orange)
         secondStack = makeHorizontalStackView([sixButton, fiveButton, fourButton, minusButton])
         
-        threeButton = buttons(title: "3")
-        twoButton = buttons(title: "2")
-        oneButton = buttons(title: "1")
-        multiplyButton = buttons(title: "*")
+        threeButton = makeButtons(title: "3", action: nil, backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        twoButton = makeButtons(title: "2", action: nil, backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        oneButton = makeButtons(title: "1", action: nil, backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        multiplyButton = makeButtons(title: "*", action: nil, backgroundColor: .orange)
         thirdStack = makeHorizontalStackView([threeButton, twoButton, oneButton, multiplyButton])
         
-        acButton = buttons(title: "AC")
-        zeroButton = buttons(title: "0")
-        equalsButton = buttons(title: "=")
-        divideButton = buttons(title: "/")
+        acButton = makeButtons(title: "AC", action: nil, backgroundColor: .orange)
+        zeroButton = makeButtons(title: "0", action: nil, backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
+        equalsButton = makeButtons(title: "=", action: nil, backgroundColor: .orange)
+        divideButton = makeButtons(title: "/", action: nil, backgroundColor: .orange)
         forthStack = makeHorizontalStackView([acButton, zeroButton, equalsButton, divideButton])
         
         // 가로 스택뷰 vStackView안에 배치
@@ -122,10 +112,11 @@ class ViewController: UIViewController {
         }
     }
     
-    // 반복사용하는 버튼 디자인 함수로 만들기
-    func buttons(title: String) -> UIButton {
+    // 반복 사용하는 버튼 디자인 함수로 만들기
+    // Lv4에서 버튼 컬러 변경으로 함수 수정
+    func makeButtons(title: String, action: Selector?, backgroundColor: UIColor) -> UIButton {
         let button = UIButton()
-        button.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
+        button.backgroundColor = backgroundColor
         button.setTitle(title, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 30)  //옵셔널체이닝
         button.layer.cornerRadius = 40
