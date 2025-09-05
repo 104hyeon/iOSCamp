@@ -1,14 +1,17 @@
 /*
- Lv1.
- - `backgroundColor = .black`
- - `textColor = .white`
- - 우선, 텍스트는 `12345` 로 고정
- - 텍스트 오른쪽 정렬
- - Font = 시스템 볼드체, 사이즈 60
- - **AutoLayout**
-     - leading, trailing = superView 로 부터 30 떨어지도록 세팅
-     - top = superView 로 부터 200 떨어지도록 세팅
-     - height = 100
+ Lv3.
+ UIStackView을 사용해서 세로 스택 뷰 생성. 왼쪽과 같이 구성해보세요.
+
+ verticalStackView 속성
+     - axis = .vertical
+     - backgroundColor = .black
+     - spacing = 10
+     - distribution = .fillEqually
+ - verticalStackView AutoLayout
+     - width = 350
+     - top = label 의 bottom 으로 부터 60 떨어지도록.
+     - centerX = superView 와 같도록.
+
  */
 
 
@@ -17,12 +20,32 @@ import SnapKit
 
 class ViewController: UIViewController {
     var resultlabel = UILabel()
+    
+    let vStackView = UIStackView()
 
     var sevenButton = UIButton()
     var eightButton = UIButton()
     var nineButton = UIButton()
     var plusButton = UIButton()
     var firstStack = UIStackView()
+    
+    var sixButton = UIButton()
+    var fiveButton = UIButton()
+    var fourButton = UIButton()
+    var minusButton = UIButton()
+    var secondStack = UIStackView()
+    
+    var threeButton = UIButton()
+    var twoButton = UIButton()
+    var oneButton = UIButton()
+    var multiplyButton = UIButton()
+    var thirdStack = UIStackView()
+    
+    var acButton = UIButton()
+    var zeroButton = UIButton()
+    var equalsButton = UIButton()
+    var divideButton = UIButton()
+    var forthStack = UIStackView()
     
     
     override func viewDidLoad() {
@@ -33,41 +56,69 @@ class ViewController: UIViewController {
     }
     // 구성 함수
     func cofigureUI() {
-                
+        
+        // resultlabel
         resultlabel.backgroundColor = .black
         resultlabel.textColor = .white
         resultlabel.text = "12345"
         resultlabel.font = .boldSystemFont(ofSize: 60)
         resultlabel.textAlignment = .right
         
-        // 버튼에 타이틀 넣기
+        // verticalStackView
+        vStackView.axis = .vertical
+        vStackView.backgroundColor = .black
+        vStackView.spacing = 10
+        vStackView.distribution = .fillEqually
+        
+        // 서브뷰 추가
+        [resultlabel, vStackView]
+            .forEach { view.addSubview($0) }
+                
+        // 버튼에 타이틀 넣기와 스택 구성하기
         sevenButton = buttons(title: "7")
         eightButton = buttons(title: "8")
         nineButton = buttons(title: "9")
         plusButton = buttons(title: "+")
         firstStack = makeHorizontalStackView([sevenButton, eightButton, nineButton, plusButton])
-               
-                
-        [resultlabel, firstStack]
-            .forEach { view.addSubview($0) }
         
-        // firstSatck 레이아웃
-        firstStack.snp.makeConstraints {
-            $0.height.equalTo(80)
-            $0.leading.equalToSuperview().inset(30)
-            $0.trailing.equalToSuperview().inset(30)
-            $0.top.equalTo(resultlabel.snp.bottom).offset(20)
-        }
+        sixButton = buttons(title: "6")
+        fiveButton = buttons(title: "5")
+        fourButton = buttons(title: "4")
+        minusButton = buttons(title: "-")
+        secondStack = makeHorizontalStackView([sixButton, fiveButton, fourButton, minusButton])
+        
+        threeButton = buttons(title: "3")
+        twoButton = buttons(title: "2")
+        oneButton = buttons(title: "1")
+        multiplyButton = buttons(title: "*")
+        thirdStack = makeHorizontalStackView([threeButton, twoButton, oneButton, multiplyButton])
+        
+        acButton = buttons(title: "AC")
+        zeroButton = buttons(title: "0")
+        equalsButton = buttons(title: "=")
+        divideButton = buttons(title: "/")
+        forthStack = makeHorizontalStackView([acButton, zeroButton, equalsButton, divideButton])
+        
+        // 가로 스택뷰 vStackView안에 배치
+        [firstStack, secondStack, thirdStack, forthStack]
+            .forEach { vStackView.addArrangedSubview($0) }
+
     }
     
     
-    // label 레이아웃
+    // 전체적 레이아웃
     func setConstraints() {
         resultlabel.snp.makeConstraints {
             $0.height.equalTo(100)
             $0.top.equalToSuperview().inset(200)
             $0.leading.equalToSuperview().inset(30)
             $0.trailing.equalToSuperview().inset(30)
+        }
+        
+        vStackView.snp.makeConstraints {
+            $0.width.equalTo(350)
+            $0.top.equalTo(resultlabel.snp.bottom).offset(60)
+            $0.centerX.equalToSuperview()
         }
     }
     
@@ -92,6 +143,9 @@ class ViewController: UIViewController {
         stackView.backgroundColor = .black
         stackView.spacing = 10
         stackView.distribution = .fillEqually
+        firstStack.snp.makeConstraints {
+            $0.height.equalTo(80)
+        }
         return stackView
     }
 }
