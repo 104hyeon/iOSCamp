@@ -1,7 +1,6 @@
 /*
- Lv7.
- AC 버튼을 클릭하면 모든 값을 지우고 “0” 으로 초기화 되도록 구현합니다.
-
+ Lv8.
+ 등호 (=) 버튼을 클릭하면 연산이 수행되도록 구현합니다.
  */
 
 
@@ -85,7 +84,7 @@ class ViewController: UIViewController {
         
         acButton = makeButtons(title: "AC", action: #selector(didTabReset), backgroundColor: .orange)
         zeroButton = makeButtons(title: "0", action: #selector(didTapButton), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        equalsButton = makeButtons(title: "=", action: #selector(didTapButton), backgroundColor: .orange)
+        equalsButton = makeButtons(title: "=", action: #selector(didTabEqul), backgroundColor: .orange)
         divideButton = makeButtons(title: "/", action: #selector(didTapButton), backgroundColor: .orange)
         forthStack = makeHorizontalStackView([acButton, zeroButton, equalsButton, divideButton])
         
@@ -139,7 +138,17 @@ class ViewController: UIViewController {
         }
         return stackView
     }
+    // 연산 함수
+    func calculate(expression: String) -> Int? {
+            let expression = NSExpression(format: expression)
+        if let result = expression.expressionValue(with: nil, context: nil) as? Int {
+            return result
+        } else {
+            return nil
+        }
+    }
     
+    // 버튼 클릭시 레이블에 추가하기
     @objc
     func didTapButton(_ sender: UIButton) {
         
@@ -149,13 +158,22 @@ class ViewController: UIViewController {
         resultlabel.text! += sender.currentTitle ?? ""
 
     }
-    
+    // "AC"버튼 클릭 시 "0"으로 리셋
     @objc
     func didTabReset() {
         resultlabel.text = "0"
     }
-
     
+    // "="버튼 클릭 시 연산 후 결과 값 레이블에 반영
+    @objc
+    func didTabEqul() {
+        if let result = calculate(expression: resultlabel.text ?? "") {
+            resultlabel.text = "\(result)"
+        } else {
+            resultlabel.text = nil
+        }
+    }
+
 }
 
 
