@@ -9,7 +9,7 @@ import SnapKit
 
 class ViewController: UIViewController {
     var number: Int = 0
-    var resultlabel = UILabel()
+    var resultLabel = UILabel()
     let vStackView = UIStackView()
     
     var sevenButton = UIButton()
@@ -41,17 +41,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         cofigureUI()
         setConstraints()
-        
-    }
+        }
+    
     // 구성 함수
     func cofigureUI() {
         
-        // resultlabel
-        resultlabel.backgroundColor = .black
-        resultlabel.textColor = .white
-        resultlabel.text = "\(number)"
-        resultlabel.font = .boldSystemFont(ofSize: 60)
-        resultlabel.textAlignment = .right
+        // resultLabel
+        resultLabel.backgroundColor = .black
+        resultLabel.textColor = .white
+        resultLabel.text = "\(number)"
+        resultLabel.font = .boldSystemFont(ofSize: 60)
+        resultLabel.textAlignment = .right
         
         // verticalStackView
         vStackView.axis = .vertical
@@ -60,7 +60,7 @@ class ViewController: UIViewController {
         vStackView.distribution = .fillEqually
         
         // 서브뷰 추가
-        [resultlabel, vStackView]
+        [resultLabel, vStackView]
             .forEach { view.addSubview($0) }
                 
         // 버튼에 타이틀 넣기와 스택 구성하기
@@ -96,7 +96,7 @@ class ViewController: UIViewController {
     
     // 전체적 레이아웃
     func setConstraints() {
-        resultlabel.snp.makeConstraints {
+        resultLabel.snp.makeConstraints {
             $0.height.equalTo(100)
             $0.top.equalToSuperview().inset(200)
             $0.leading.equalToSuperview().inset(30)
@@ -105,7 +105,7 @@ class ViewController: UIViewController {
         
         vStackView.snp.makeConstraints {
             $0.width.equalTo(350)
-            $0.top.equalTo(resultlabel.snp.bottom).offset(60)
+            $0.top.equalTo(resultLabel.snp.bottom).offset(60)
             $0.centerX.equalToSuperview()
         }
     }
@@ -151,26 +151,25 @@ class ViewController: UIViewController {
     // 버튼 클릭시 레이블에 추가하기
     @objc
     func didTapButton(_ sender: UIButton) {
-        
-        if resultlabel.text == "0" {
-            resultlabel.text = " "
+        if resultLabel.text == "0" {
+            resultLabel.text = " "
         }
-        resultlabel.text! += sender.currentTitle ?? ""
-
+        resultLabel.text! += sender.currentTitle ?? ""
     }
+        
     // "AC"버튼 클릭 시 "0"으로 리셋
     @objc
     func didTabReset() {
-        resultlabel.text = "0"
+        resultLabel.text = "0"
     }
     
     // "="버튼 클릭 시 연산 후 결과 값 레이블에 반영
     @objc
     func didTabEqul() {
-        if let result = calculate(expression: resultlabel.text ?? "") {
-            resultlabel.text = "\(result)"
+        if let result = calculate(expression: resultLabel.text ?? "") {
+            resultLabel.text = "\(result)"
         } else {
-            resultlabel.text = nil
+            resultLabel.text = nil
         }
     }
 
