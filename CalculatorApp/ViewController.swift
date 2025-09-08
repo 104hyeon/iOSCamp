@@ -1,8 +1,7 @@
 /*
- Lv6.
- 기본 텍스트는 “12345” 가 아닌 “0”이 되도록 합니다.
- 기본으로 라벨에 노출되어있던 텍스트 오른쪽에 버튼을 클릭하면 그 버튼의 값이 추가되도록 합니다.
- 맨 앞자리가 0 인 숫자라면, 0을 지우고 표현하도록 합니다.
+ Lv7.
+ AC 버튼을 클릭하면 모든 값을 지우고 “0” 으로 초기화 되도록 구현합니다.
+
  */
 
 
@@ -84,7 +83,7 @@ class ViewController: UIViewController {
         multiplyButton = makeButtons(title: "*", action: #selector(didTapButton), backgroundColor: .orange)
         thirdStack = makeHorizontalStackView([threeButton, twoButton, oneButton, multiplyButton])
         
-        acButton = makeButtons(title: "AC", action: #selector(didTapButton), backgroundColor: .orange)
+        acButton = makeButtons(title: "AC", action: #selector(didTabReset), backgroundColor: .orange)
         zeroButton = makeButtons(title: "0", action: #selector(didTapButton), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
         equalsButton = makeButtons(title: "=", action: #selector(didTapButton), backgroundColor: .orange)
         divideButton = makeButtons(title: "/", action: #selector(didTapButton), backgroundColor: .orange)
@@ -149,6 +148,11 @@ class ViewController: UIViewController {
         }
         resultlabel.text! += sender.currentTitle ?? ""
 
+    }
+    
+    @objc
+    func didTabReset() {
+        resultlabel.text = "0"
     }
 
     
