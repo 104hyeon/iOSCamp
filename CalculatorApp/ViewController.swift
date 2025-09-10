@@ -1,11 +1,49 @@
 /*
  Lv8.
- 등호 (=) 버튼을 클릭하면 연산이 수행되도록 구현합니다.
+ 연산 버튼 두 번 연속 안 눌리도록 수정
+ 버튼들 enum 사용
  */
 
 
 import UIKit
 import SnapKit
+
+enum Buttons {
+    case numbers(Int), add, subtract, multiply, divide, equal, reset
+    
+    var title: String {
+        switch self {
+        case .numbers(let value):
+            return "\(value)"
+        case .add: return "+"
+        case .subtract: return "-"
+        case .multiply: return "*"
+        case .divide: return "/"
+        case .equal: return "="
+        case .reset: return "AC"
+        }
+    }
+    
+    var backgroundColor: UIColor {
+        switch self {
+        case .add, .subtract, .multiply, .divide, .equal, .reset:
+            return .orange
+        case .numbers:
+            return UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
+        }
+    }
+    
+    var action: Selector {
+        switch self {
+        case .equal:
+            return #selector(ViewController.didTabEqul)
+        case .reset:
+            return #selector(ViewController.didTabReset)
+        default:
+            return #selector(ViewController.didTapButton(_:))
+        }
+    }
+}
 
 class ViewController: UIViewController {
     var number: Int = 0
@@ -64,28 +102,28 @@ class ViewController: UIViewController {
             .forEach { view.addSubview($0) }
                 
         // 버튼에 타이틀 넣기와 스택 구성하기
-        sevenButton = makeButtons(title: "7", action: #selector(didTapButton), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        eightButton = makeButtons(title: "8", action: #selector(didTapButton), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        nineButton = makeButtons(title: "9", action: #selector(didTapButton), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        plusButton = makeButtons(title: "+", action: #selector(didTapButton), backgroundColor: .orange)
+        sevenButton = makeButtons(.numbers(7))
+        eightButton = makeButtons(.numbers(8))
+        nineButton = makeButtons(.numbers(9))
+        plusButton = makeButtons(.add)
         firstStack = makeHorizontalStackView([sevenButton, eightButton, nineButton, plusButton])
         
-        sixButton = makeButtons(title: "6", action: #selector(didTapButton), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        fiveButton = makeButtons(title: "5", action: #selector(didTapButton), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        fourButton = makeButtons(title: "4", action: #selector(didTapButton), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        minusButton = makeButtons(title: "-", action: #selector(didTapButton), backgroundColor: .orange)
+        sixButton = makeButtons(.numbers(6))
+        fiveButton = makeButtons(.numbers(5))
+        fourButton = makeButtons(.numbers(4))
+        minusButton = makeButtons(.subtract)
         secondStack = makeHorizontalStackView([sixButton, fiveButton, fourButton, minusButton])
         
-        threeButton = makeButtons(title: "3", action: #selector(didTapButton), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        twoButton = makeButtons(title: "2", action: #selector(didTapButton), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        oneButton = makeButtons(title: "1", action: #selector(didTapButton), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        multiplyButton = makeButtons(title: "*", action: #selector(didTapButton), backgroundColor: .orange)
+        threeButton = makeButtons(.numbers(3))
+        twoButton = makeButtons(.numbers(2))
+        oneButton = makeButtons(.numbers(1))
+        multiplyButton = makeButtons(.multiply)
         thirdStack = makeHorizontalStackView([threeButton, twoButton, oneButton, multiplyButton])
         
-        acButton = makeButtons(title: "AC", action: #selector(didTabReset), backgroundColor: .orange)
-        zeroButton = makeButtons(title: "0", action: #selector(didTapButton), backgroundColor: UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0))
-        equalsButton = makeButtons(title: "=", action: #selector(didTabEqul), backgroundColor: .orange)
-        divideButton = makeButtons(title: "/", action: #selector(didTapButton), backgroundColor: .orange)
+        acButton = makeButtons(.reset)
+        zeroButton = makeButtons(.numbers(0))
+        equalsButton = makeButtons(.equal)
+        divideButton = makeButtons(.divide)
         forthStack = makeHorizontalStackView([acButton, zeroButton, equalsButton, divideButton])
         
         // 가로 스택뷰 vStackView안에 배치
@@ -112,17 +150,17 @@ class ViewController: UIViewController {
     
     // 반복 사용하는 버튼 디자인 함수로 만들기
     // Lv4에서 버튼 컬러 변경으로 함수 수정
-    func makeButtons(title: String, action: Selector, backgroundColor: UIColor) -> UIButton {
+    func makeButtons(_ type: Buttons) -> UIButton {
         let button = UIButton()
-        button.backgroundColor = backgroundColor
-        button.setTitle(title, for: .normal)
+        button.backgroundColor = type.backgroundColor
+        button.setTitle(type.title, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 30)  //옵셔널체이닝
         button.layer.cornerRadius = 40
         button.snp.makeConstraints {
             $0.width.equalTo(80)
             $0.height.equalTo(80)
         }
-        button.addTarget(self, action: action, for: .touchUpInside)
+        button.addTarget(self, action: type.action, for: .touchUpInside)
         return button
     }
     
@@ -151,11 +189,30 @@ class ViewController: UIViewController {
     // 버튼 클릭시 레이블에 추가하기
     @objc
     func didTapButton(_ sender: UIButton) {
-        if resultLabel.text == "0" {
+        let resultText = resultLabel.text?.last
+        let newText = sender.currentTitle ?? ""
+        let operators = ["+", "-", "*", "/"]
+        
+        
+        switch resultText {
+        case "0":
             resultLabel.text = " "
+            resultLabel.text! += newText
+            
+        case let oper?:
+            if operators.contains(String(oper)) && operators.contains(newText) {
+                return
+            }
+            resultLabel.text! += newText
+            
+            
+        default :
+            resultLabel.text! += newText
+            
         }
-        resultLabel.text! += sender.currentTitle ?? ""
     }
+        
+
         
     // "AC"버튼 클릭 시 "0"으로 리셋
     @objc
