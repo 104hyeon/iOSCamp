@@ -1,7 +1,7 @@
 /*
  Lv8.
- 연산 버튼 두 번 연속 안 눌리도록 수정
- 버튼들 enum 사용
+- 끝자리가 "0"이 들어갈 때 숫자 지워지는 문제 해결
+- 일부 주석 수정
  */
 
 
@@ -150,6 +150,7 @@ class ViewController: UIViewController {
     
     // 반복 사용하는 버튼 디자인 함수로 만들기
     // Lv4에서 버튼 컬러 변경으로 함수 수정
+    // enum 사용으로 매개변수 변경
     func makeButtons(_ type: Buttons) -> UIButton {
         let button = UIButton()
         button.backgroundColor = type.backgroundColor
@@ -192,27 +193,22 @@ class ViewController: UIViewController {
         let resultText = resultLabel.text?.last
         let newText = sender.currentTitle ?? ""
         let operators = ["+", "-", "*", "/"]
-        
-        
-        switch resultText {
-        case "0":
+        // 전체 레이블이 "0"이면 지우고 시작
+        if resultLabel.text == "0" {
             resultLabel.text = " "
-            resultLabel.text! += newText
-            
+        }
+        // 연산 기호 중복 방지
+        switch resultText {
         case let oper?:
             if operators.contains(String(oper)) && operators.contains(newText) {
                 return
             }
             resultLabel.text! += newText
             
-            
-        default :
+        default:
             resultLabel.text! += newText
-            
         }
     }
-        
-
         
     // "AC"버튼 클릭 시 "0"으로 리셋
     @objc
