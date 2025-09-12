@@ -10,6 +10,9 @@
 >-  Lv7. 초기화 버튼 구현.
 >-  Lv8. 등호(=) 버튼 클릭 시 수식이 연산 되도록 구현.
 
+### 📝 [진행과정](https://hae-on4.tistory.com/entry/%EB%82%B4%EB%B0%B0%EC%BA%A04%EC%A3%BC%EC%B0%A8-%EA%B3%84%EC%82%B0%EA%B8%B0%EC%95%B1-%EB%A7%8C%EB%93%A4%EA%B8%B0)
+
+### 📝 [추가: Enum활용](https://hae-on4.tistory.com/entry/250910-%EA%B3%84%EC%82%B0%EA%B8%B0%EC%95%B1-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EC%B6%94%EA%B0%80)
 
 
 ## 앱 설명
@@ -23,6 +26,7 @@
 
 ## 문제 해결
 - 연산버튼이 두 번 이상 연속으로 입력되지 않도록 수정했습니다.  
+- ❗️ [트러블슈팅](https://hae-on4.tistory.com/entry/4%EC%A3%BC%EC%B0%A8%EA%B3%BC%EC%A0%9C%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85)
 
 ## 추후 개선 사항
 - 등호를 누르고 결과값을 얻은 후 숫자 입력하면 결과값에 추가되는 문제 해결이  필요합니다.
